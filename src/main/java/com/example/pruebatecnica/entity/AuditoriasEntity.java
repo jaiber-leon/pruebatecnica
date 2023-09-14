@@ -3,6 +3,7 @@ package com.example.pruebatecnica.entity;
 import com.example.pruebatecnica.enumers.Estado;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@Table(name = "auditorias")
 public class AuditoriasEntity {
 
     @Id
@@ -21,8 +23,12 @@ public class AuditoriasEntity {
     private String nombre;
     @Column(name = "ente_de_control")
     private String enteDeControl;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_de_inicio")
     private Date fechaDeInicio;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_de_finalizacion")
     private Date fechaDeFinalizacion;
     @Enumerated
