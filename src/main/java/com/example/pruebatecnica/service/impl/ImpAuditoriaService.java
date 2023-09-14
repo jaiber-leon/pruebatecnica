@@ -1,14 +1,16 @@
 package com.example.pruebatecnica.service.impl;
 
+import com.example.pruebatecnica.dto.AuditoriaDTO;
 import com.example.pruebatecnica.entity.AuditoriasEntity;
 import com.example.pruebatecnica.enumers.Estado;
 import com.example.pruebatecnica.excepcions.ResourceNotFound;
+import com.example.pruebatecnica.mapper.AuditoriasMapper;
 import com.example.pruebatecnica.repository.IAuditoriaRepository;
 import com.example.pruebatecnica.service.IAuditoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +19,8 @@ public class ImpAuditoriaService implements IAuditoriaService {
     @Autowired
     IAuditoriaRepository iAuditoriaRepository;
 
+    @Autowired
+    AuditoriasMapper auditoriasMapper;
     @Override
     public void updateAuditoria(Long idAuditorias,AuditoriasEntity auditoriasEntityact) {
         try{
@@ -45,18 +49,21 @@ public class ImpAuditoriaService implements IAuditoriaService {
     }
 
     @Override
-    public List<AuditoriasEntity> obtenerAuditorias() {
+    public List<AuditoriaDTO> obtenerAuditorias() {
         List<AuditoriasEntity> auditoriasEntity = iAuditoriaRepository.findAll();
-        return auditoriasEntity;
+        List<AuditoriaDTO> auditoriaDTOList = new ArrayList<>();
+        for (AuditoriasEntity auditoriasEntity1 : auditoriasEntity){
+            AuditoriaDTO auditoriaDTO = auditoriasMapper.convertirEntidadADTO(auditoriasEntity1);
+            auditoriaDTOList.add(auditoriaDTO);
+
+        }
+        return auditoriaDTOList;
     }
 
     @Override
-    public AuditoriasEntity createAuditoria() {
+    public AuditoriaDTO createAuditoria() {
         return null;
     }
 
-    @Override
-    public List<AuditoriasEntity> getAllAudiorias() {
-        return null;
-    }
+
 }

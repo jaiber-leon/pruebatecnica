@@ -1,5 +1,6 @@
 package com.example.pruebatecnica.controller;
 
+import com.example.pruebatecnica.dto.AuditoriaDTO;
 import com.example.pruebatecnica.entity.AuditoriasEntity;
 import com.example.pruebatecnica.service.impl.ImpAuditoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class AuditoriasController {
     }
 
     @GetMapping("/traer")
-    public List<AuditoriasEntity> traer (){
+    public List<AuditoriaDTO> traer (){
         return impAuditoriaService.obtenerAuditorias();
     }
 }
