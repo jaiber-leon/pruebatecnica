@@ -18,8 +18,10 @@ public class ImpAuditoriaService implements IAuditoriaService {
     IAuditoriaRepository iAuditoriaRepository;
 
     @Override
-    public void updateAuditoria(AuditoriasEntity auditoriasEntityact) {
-        AuditoriasEntity auditoriasEntityupd = new AuditoriasEntity();
+    public void updateAuditoria(Long idAuditorias,AuditoriasEntity auditoriasEntityact) {
+        try{
+
+        AuditoriasEntity auditoriasEntityupd = iAuditoriaRepository.findById(idAuditorias).orElseThrow(()-> new ResourceNotFound("no se encontro"));
         auditoriasEntityupd.setNombre(auditoriasEntityact.getNombre());
         auditoriasEntityupd.setEnteDeControl(auditoriasEntityact.getEnteDeControl());
         auditoriasEntityupd.setFechaDeInicio(auditoriasEntityact.getFechaDeInicio());
@@ -28,6 +30,9 @@ public class ImpAuditoriaService implements IAuditoriaService {
             auditoriasEntityupd.setFechaDeFinalizacion(new Date());
         }
         iAuditoriaRepository.save(auditoriasEntityupd);
+    }catch (Exception e){
+            new ResourceNotFound("no se pudo actualizar");
+        }
     }
 
     @Override
@@ -37,6 +42,12 @@ public class ImpAuditoriaService implements IAuditoriaService {
        }catch (Exception e){
            throw new ResourceNotFound("No se encontro la auditoria con el id: "+idAuditorias);
        }
+    }
+
+    @Override
+    public List<AuditoriasEntity> obtenerAuditorias() {
+        List<AuditoriasEntity> auditoriasEntity = iAuditoriaRepository.findAll();
+        return auditoriasEntity;
     }
 
     @Override

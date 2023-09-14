@@ -5,6 +5,8 @@ import com.example.pruebatecnica.service.impl.ImpAuditoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/auditorias")
 public class AuditoriasController {
@@ -12,13 +14,18 @@ public class AuditoriasController {
     @Autowired
     ImpAuditoriaService impAuditoriaService;
 
-    @PutMapping("/actualizar")
-    public void update (@RequestBody AuditoriasEntity auditoriasEntity){
-        impAuditoriaService.updateAuditoria(auditoriasEntity);
+    @PutMapping("/actualizar/{idAuditorias}")
+    public void update (@PathVariable Long idAuditorias, @RequestBody AuditoriasEntity auditoriasEntity){
+        impAuditoriaService.updateAuditoria(idAuditorias,auditoriasEntity);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/borrar/{idAuditorias}")
     public void delete (@PathVariable Long idAuditorias ){
         impAuditoriaService.deleteAuditoriaById(idAuditorias);
+    }
+
+    @GetMapping("/traer")
+    public List<AuditoriasEntity> traer (){
+        return impAuditoriaService.obtenerAuditorias();
     }
 }
