@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class ImpAuditoriaService implements IAuditoriaService {
     @Autowired
@@ -28,7 +29,7 @@ public class ImpAuditoriaService implements IAuditoriaService {
     @Override
     public void updateAuditoria(Long idAuditorias,AuditoriasEntity auditoriasEntityact) {
         try{
-        AuditoriasEntity auditoriasEntityupd = iAuditoriaRepository.findById(idAuditorias).orElseThrow(()-> new ResourceNotFound(Constante.NOENCONTRADA));
+        AuditoriasEntity auditoriasEntityupd = iAuditoriaRepository.findById(idAuditorias).orElseThrow(()-> new ResourceNotFound(Constante.ERROR_ID_NO_ENCONTRADO));
         auditoriasEntityupd.setNombre(auditoriasEntityact.getNombre());
         auditoriasEntityupd.setEnteDeControl(auditoriasEntityact.getEnteDeControl());
         auditoriasEntityupd.setFechaDeInicio(auditoriasEntityact.getFechaDeInicio());
@@ -38,7 +39,7 @@ public class ImpAuditoriaService implements IAuditoriaService {
         }
         iAuditoriaRepository.save(auditoriasEntityupd);
     }catch (Exception e){
-            new ResourceNotFound("no se pudo actualizar");
+            new ResourceNotFound(Constante.ERROR_ACTUALUZAR);
         }
     }
 
@@ -47,7 +48,7 @@ public class ImpAuditoriaService implements IAuditoriaService {
        try {
            iAuditoriaRepository.deleteById(idAuditorias);
        }catch (Exception e){
-           throw new ResourceNotFound(Constante.NOENCONTRADA+idAuditorias);
+           throw new ResourceNotFound(Constante.ERROR_ID_NO_ENCONTRADO+idAuditorias);
        }
     }
 
@@ -66,7 +67,7 @@ public class ImpAuditoriaService implements IAuditoriaService {
     @Override
     public AuditoriaDTO findById(Long idAuditoria) {
         AuditoriasEntity auditoria = iAuditoriaRepository.findById(idAuditoria)
-                .orElseThrow(() -> new ResourceNotFound(Constante.NOENCONTRADA + idAuditoria));
+                .orElseThrow(() -> new ResourceNotFound(Constante.ERROR_ID_NO_ENCONTRADO + idAuditoria));
         AuditoriaDTO auditoriaDTO = auditoriasMapper.convertirEntidadADTO(auditoria);
         return auditoriaDTO;
     }

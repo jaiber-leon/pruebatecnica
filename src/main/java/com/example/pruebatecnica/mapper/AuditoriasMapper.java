@@ -4,6 +4,10 @@ import com.example.pruebatecnica.dto.AuditoriaDTO;
 import com.example.pruebatecnica.entity.AuditoriasEntity;
 import org.springframework.stereotype.Service;
 
+/**
+ * Clase Mapper entre Dto y Entity Audotoria
+ *
+ */
 @Service
 public class AuditoriasMapper {
 

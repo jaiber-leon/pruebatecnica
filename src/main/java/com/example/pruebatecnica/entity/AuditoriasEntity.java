@@ -8,6 +8,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
+/**
+ * Entidad auditorias en Base de datos
+ *
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

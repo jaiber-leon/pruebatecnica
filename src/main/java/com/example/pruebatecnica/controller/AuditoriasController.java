@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * Clases controller de auditorias
- * @author
+ * Clase controller de auditoria
+ *
+ * @author Jaiber Antonio
  */
 @RestController
-@RequestMapping(Constante.AUDITORIAS)
+@RequestMapping(Constante.PATH_AUDITORIAS)
 @CrossOrigin(originPatterns = "http://localhost:4200")
 public class AuditoriasController {
 
