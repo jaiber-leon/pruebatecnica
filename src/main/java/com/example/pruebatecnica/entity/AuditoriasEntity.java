@@ -1,6 +1,7 @@
 package com.example.pruebatecnica.entity;
 
 import com.example.pruebatecnica.enumers.Estado;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +27,7 @@ public class AuditoriasEntity {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_de_inicio")
+    @JsonFormat(pattern ="yyyy-MM-dd")
     private Date fechaDeInicio;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
