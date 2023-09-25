@@ -3,6 +3,7 @@ package com.example.pruebatecnica.service.impl;
 import com.example.pruebatecnica.dto.AuditoriaDTO;
 import com.example.pruebatecnica.entity.AuditoriasEntity;
 import com.example.pruebatecnica.enumers.Estado;
+import com.example.pruebatecnica.excepcions.BadRequestException;
 import com.example.pruebatecnica.excepcions.ResourceNotFound;
 import com.example.pruebatecnica.mapper.AuditoriasMapper;
 import com.example.pruebatecnica.repository.IAuditoriaRepository;
@@ -26,10 +27,13 @@ public class ImpAuditoriaService implements IAuditoriaService {
 
     @Autowired
     AuditoriasMapper auditoriasMapper;
+
+
     @Override
     public void updateAuditoria(Long idAuditorias,AuditoriasEntity auditoriasEntityact) {
         try{
         AuditoriasEntity auditoriasEntityupd = iAuditoriaRepository.findById(idAuditorias).orElseThrow(()-> new ResourceNotFound(Constante.ERROR_ID_NO_ENCONTRADO));
+        validateAuditoria(auditoriasEntityact);
         auditoriasEntityupd.setNombre(auditoriasEntityact.getNombre());
         auditoriasEntityupd.setEnteDeControl(auditoriasEntityact.getEnteDeControl());
         auditoriasEntityupd.setFechaDeInicio(auditoriasEntityact.getFechaDeInicio());
@@ -37,11 +41,26 @@ public class ImpAuditoriaService implements IAuditoriaService {
         if (auditoriasEntityupd.getEstado() == Estado.FINALIZADA){
             auditoriasEntityupd.setFechaDeFinalizacion(new Date());
         }
+
         iAuditoriaRepository.save(auditoriasEntityupd);
     }catch (Exception e){
             new ResourceNotFound(Constante.ERROR_ACTUALUZAR);
         }
     }
+    public void validateAuditoria(AuditoriasEntity auditoriasEntityact) {
+        if (auditoriasEntityact.getNombre() == null || auditoriasEntityact.getNombre().isEmpty()) {
+            throw new BadRequestException("El nombre no puede estar vacío");
+        }
+
+        if (auditoriasEntityact.getNombre().length() < 3) {
+            throw new BadRequestException("El nombre debe tener al menos 3 caracteres");
+        }
+
+        if (auditoriasEntityact.getFechaDeInicio() != null && auditoriasEntityact.getFechaDeFinalizacion() != null) {
+            if (auditoriasEntityact.getFechaDeInicio().after(auditoriasEntityact.getFechaDeFinalizacion())) {
+                throw new BadRequestException("La fecha de inicio debe ser anterior a la fecha de finalización");
+            }
+        }}
 
     @Override
     public void deleteAuditoriaById(Long idAuditorias) {
@@ -87,6 +106,7 @@ public class ImpAuditoriaService implements IAuditoriaService {
 
     @Override
     public AuditoriaDTO createAuditoria(AuditoriasEntity auditoriasEntity) {
+        validateAuditoria(auditoriasEntity);
         AuditoriasEntity auditoriasEntity1 = iAuditoriaRepository.save(auditoriasEntity);
         AuditoriaDTO auditoriaDTO = auditoriasMapper.convertirEntidadADTO(auditoriasEntity1);
         return auditoriaDTO;
