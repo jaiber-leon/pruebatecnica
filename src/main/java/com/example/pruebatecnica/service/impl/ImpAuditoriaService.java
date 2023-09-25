@@ -49,16 +49,16 @@ public class ImpAuditoriaService implements IAuditoriaService {
     }
     public void validateAuditoria(AuditoriasEntity auditoriasEntityact) {
         if (auditoriasEntityact.getNombre() == null || auditoriasEntityact.getNombre().isEmpty()) {
-            throw new BadRequestException("El nombre no puede estar vacío");
+            throw new BadRequestException(Constante.EL_NOMBRE_NO_PUEDE_ESTAR_VACIO);
         }
 
         if (auditoriasEntityact.getNombre().length() < 3) {
-            throw new BadRequestException("El nombre debe tener al menos 3 caracteres");
+            throw new BadRequestException(Constante.MINIMO_DE_CARACTERES_DE_NOMBRE);
         }
 
         if (auditoriasEntityact.getFechaDeInicio() != null && auditoriasEntityact.getFechaDeFinalizacion() != null) {
             if (auditoriasEntityact.getFechaDeInicio().after(auditoriasEntityact.getFechaDeFinalizacion())) {
-                throw new BadRequestException("La fecha de inicio debe ser anterior a la fecha de finalización");
+                throw new BadRequestException(Constante.FECHA_DE_INICIO_DEBE_SER_ANTERIOR_A_LA_DE_FINALIZACION);
             }
         }}
 

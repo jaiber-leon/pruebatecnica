@@ -1,6 +1,7 @@
 package com.example.pruebatecnica.entity;
 
 import com.example.pruebatecnica.enumers.Estado;
+import com.example.pruebatecnica.util.Constante;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
@@ -28,9 +29,9 @@ public class AuditoriasEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAuditorias;
 
-    @NotEmpty(message = "El nombre no puede estar vacío")
+    @NotEmpty(message = Constante.EL_NOMBRE_NO_PUEDE_ESTAR_VACIO)
     @Column(name = "nombre")
-    @Size(min=3, message = "El nombre debe tener al menos 3 caracteres")
+    @Size(min=3, message = Constante.MINIMO_DE_CARACTERES_DE_NOMBRE)
     private String nombre;
 
     @NotEmpty
@@ -39,7 +40,7 @@ public class AuditoriasEntity {
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @Past(message = "La fecha de inicio debe ser anterior a la fecha de finalización")
+    @Past(message = Constante.FECHA_DE_INICIO_DEBE_SER_ANTERIOR_A_LA_DE_FINALIZACION)
     @Column(name = "fecha_de_inicio")
     @JsonFormat(pattern ="yyyy-MM-dd")
     private Date fechaDeInicio;
@@ -47,7 +48,7 @@ public class AuditoriasEntity {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name = "fecha_de_finalizacion")
-    @Future(message= "La fecha de inicio debe ser anterior a la fecha de finalización")
+    @Future(message=Constante.FECHA_DE_INICIO_DEBE_SER_ANTERIOR_A_LA_DE_FINALIZACION)
     private Date fechaDeFinalizacion;
 
     @Enumerated
